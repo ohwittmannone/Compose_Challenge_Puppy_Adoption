@@ -23,6 +23,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.navigate
 import com.example.composechallengepuppyadoption.PUPPY_DETAIL_VIEW
 import com.example.composechallengepuppyadoption.data.Puppy
+import com.example.composechallengepuppyadoption.ui.theme.Background
 import com.example.composechallengepuppyadoption.ui.theme.ComposeChallengePuppyAdoptionTheme
 import com.google.gson.Gson
 
@@ -57,7 +58,7 @@ private fun CharacterHeader(initial: String) {
 @ExperimentalFoundationApi
 @Composable
 private fun AdoptableList(puppies: List<Puppy>, navController: NavController) {
-    LazyColumn(Modifier.fillMaxWidth()) {
+    LazyColumn(Modifier.fillMaxWidth().background(Background)) {
         val grouped = puppies.groupBy { it.name[0] }
         grouped.forEach { (initial, puppies) ->
             stickyHeader { CharacterHeader(initial.toString()) }
