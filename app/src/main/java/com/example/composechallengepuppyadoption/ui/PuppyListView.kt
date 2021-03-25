@@ -40,6 +40,23 @@ fun navigateToPuppyDetailView(puppy: Puppy, navController: NavController) {
     navController.navigate("$PUPPY_DETAIL_VIEW/$puppyJson")
 }
 
+@ExperimentalFoundationApi
+@Composable
+private fun AdoptableList(puppies: List<Puppy>, navController: NavController) {
+    LazyColumn(
+        Modifier
+            .fillMaxWidth()
+            .background(Background)) {
+        val grouped = puppies.groupBy { it.name[0] }
+        grouped.forEach { (initial, puppies) ->
+            stickyHeader { CharacterHeader(initial.toString()) }
+            items(puppies.size) { puppy ->
+                PuppyCard(puppy = puppies[puppy], navController = navController)
+            }
+        }
+    }
+}
+
 @Composable
 private fun CharacterHeader(initial: String) {
     Row(
@@ -52,20 +69,6 @@ private fun CharacterHeader(initial: String) {
             modifier = Modifier.padding(start = 8.dp, top = 4.dp, bottom = 4.dp),
             style = TextStyle(color = MaterialTheme.colors.onSecondary)
         )
-    }
-}
-
-@ExperimentalFoundationApi
-@Composable
-private fun AdoptableList(puppies: List<Puppy>, navController: NavController) {
-    LazyColumn(Modifier.fillMaxWidth().background(Background)) {
-        val grouped = puppies.groupBy { it.name[0] }
-        grouped.forEach { (initial, puppies) ->
-            stickyHeader { CharacterHeader(initial.toString()) }
-            items(puppies.size) { puppy ->
-                PuppyCard(puppy = puppies[puppy], navController = navController)
-            }
-        }
     }
 }
 
